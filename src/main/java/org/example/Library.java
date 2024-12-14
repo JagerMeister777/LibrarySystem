@@ -1,8 +1,5 @@
 package org.example;
 
-
-import static org.example.Main.makeLine;
-
 import java.util.List;
 
 public class Library {
@@ -63,7 +60,7 @@ public class Library {
 
   //一覧表示
   public void showBooks() {
-    makeLine();
+    Message.makeLine();
     bookList
         .forEach(book ->
             System.out.println(
@@ -72,7 +69,7 @@ public class Library {
                     + " 管理番号 : " + book.getNumber()
             )
         );
-    makeLine();
+    Message.makeLine();
   }
 
   //タイトル検索してリスト化
@@ -94,24 +91,26 @@ public class Library {
   }
 
   //番号検索してリスト化
-  public void searchBookNumber(int number) {
-    List<Book> searchBookNumber = bookList.stream()
-        .filter(book -> number == book.getNumber())
-        .toList();
-
-    printResult(searchBookNumber);
+  public void searchBookNumber(String number) {
+    if(CheckData.isNumber(number)){
+      List<Book> searchBookNumber = bookList.stream()
+          .filter(book -> Integer.parseInt(number) == book.getNumber())
+          .toList();
+      printResult(searchBookNumber);
+    }else{
+      System.out.println("正しい入力がされていません。番号検索では数字を入力してください。");
+    }
   }
-
 
   //検索結果の出力
   public void printResult(List<Book> searchedBooks) {
     if (searchedBooks.isEmpty()) {
-      makeLine();
+      Message.makeLine();
       System.out.println("検索対象が見つかりませんでした。");
-      makeLine();
+      Message.makeLine();
 
     } else {
-      makeLine();
+      Message.makeLine();
       System.out.println(searchedBooks.size() + "件見つかりました。");
       searchedBooks
           .forEach(book ->
@@ -121,7 +120,7 @@ public class Library {
                       + " 管理番号 : " + book.getNumber()
               )
           );
-      makeLine();
+      Message.makeLine();
     }
   }
 }
